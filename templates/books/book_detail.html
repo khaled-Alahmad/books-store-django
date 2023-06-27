@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="{% url 'books:book_list' %}" class="btn btn-primary">رجوع</a>
+<h1>{{ book.title }}</h1>
+
+<p>المؤلف: {{ book.author }}</p>
+<p>الوصف: {{ book.description }}</p>
+<p>السعر: {{ book.price }}</p>
+<p>تاريخ النشر: {{ book.publication_date }}</p>
+<p>جمهور الكتاب: {{ book.audience }}</p>
+<p>عدد الصفحات: {{ book.page_count }}</p>
+<p>دار النشر: {{ book.publisher }}</p>
+<p>جزء من سلسلة: {{ book.series }}</p>
+<p>الرقم الدولي ISBN: {{ book.isbn }}</p>
+<p>إصدار: {{ book.edition }}</p>
+<p>صنف الكتاب: {{ book.category }}</p>
+<p>السعر: {{ book.price }}</p>
+<p>التنسيق: {{ book.format }}</p>
+<p>اللغة: {{ book.language }}</p>
+
+<h2>الكتب المشتراة</h2>
+<ul>
+  {% for purchased_book in purchased_books %}
+    <li>{{ purchased_book.book.title }} (تاريخ الشراء: {{ purchased_book.purchase_date }})</li>
+  {% empty %}
+    <li>لم يتم شراء هذا الكتاب بعد.</li>
+  {% endfor %}
+</ul>
+
+<h2>الكتب المشابهة</h2>
+<ul>
+  {% for similar_book in similar_books %}
+    <li>{{ similar_book.similar_book.title }}</li>
+  {% empty %}
+    <li>لا توجد كتب مشابهة حتى الآن.</li>
+  {% endfor %}
+</ul>
+
+{% endblock content %}

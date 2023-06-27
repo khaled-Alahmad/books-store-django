@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>قائمة الكتب</h1>
+    {% for book in books %}
+        <div class="book-item">
+            <h2><a href="{% url 'books:book_detail' book.id %}">{{ book.title }}</a></h2>
+            <p>{{ book.author }}</p>
+            
+            {% if user.is_authenticated %}
+                {% if book.id in book_favorite_ids %}
+                    {% for favorite in book_favorites %}
+                        {% if favorite.book.id == book.id %}
+                            <form method="POST" action="{% url 'books:favorite_book' book.id %}">
+                                {% csrf_token %}
+                                <select name="favorite_option" id="favorite-option">
+                                    <option value="important" {% if favorite.is_favorite %}selected{% endif %}>مهم</option>
+                                    <option value="excluded" {% if favorite.is_blocked %}selected{% endif %}>استبعاد</option>
+                                    <option value="none" {% if not favorite.is_favorite and not favorite.is_blocked %}selected{% endif %}>بدون تمييز</option>
+                                </select>
+                                <button type="submit" class="favorite-btn">حفظ</button>
+                            </form>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <form method="POST" action="{% url 'books:favorite_book' book.id %}">
+                        {% csrf_token %}
+                        <select name="favorite_option" id="favorite-option">
+                            <option value="none">بدون تمييز</option>
+                            <option value="important">مهم</option>
+                            <option value="excluded">استبعاد</option>
+                        </select>
+                        <button type="submit" class="favorite-btn">حفظ</button>
+                    </form>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock content %}
