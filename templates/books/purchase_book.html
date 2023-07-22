@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>شراء الكتاب</h1>
+    <h2>{{ book.title }}</h2>
+    <p>{{ book.author.name }}</p>
+    
+    <form method="POST" action="{% url 'books:purchase_book' book.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="customer_id" value="{{ request.user.customer.id }}">
+    <label for="purchaser-name">اسم المشتري:</label>
+    <input type="text" name="purchaser_name" id="purchaser-name" required>
+    <button type="submit">شراء</button>
+</form>
+
+{% endblock content %}

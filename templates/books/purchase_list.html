@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>قائمة عمليات الشراء</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>رقم العملية</th>
+                <th>اسم المشتري</th>
+                <th>تاريخ الشراء</th>
+                <th>عنوان الكتاب</th>
+                <th>المؤلف</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchase in purchases %}
+                <tr>
+                    <td>{{ purchase.id }}</td>
+                    <td>{{ purchase.purchaser_name }}</td>
+                    <td>{{ purchase.purchase_date }}</td>
+                    <td>{{ purchase.book.title }}</td>
+                    <td>{{ purchase.book.author.name }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

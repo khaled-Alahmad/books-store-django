@@ -13,19 +13,20 @@ class Order(models.Model):
     id = models.AutoField(primary_key=True)
     order_date=models.DateField()
     customer=models.ForeignKey(Customer,on_delete=models.CASCADE,default="")
-
+    def __str__(self):
+            return f"Order {self.id}"
 
 
 
 class Auther(models.Model):
     id = models.AutoField(primary_key=True)
-    user=models.ForeignKey(User,on_delete=models.CASCADE,default="")
-
+    # user=models.ForeignKey(User,on_delete=models.CASCADE,default="")
+    name=models.CharField(max_length=100,null=True)
     def __str__(self):
-        return self.user.username   
+        return self.name   
 class Publisher(models.Model):
     id = models.AutoField(primary_key=True)
-    Name=models.CharField(max_length=100,null=True)
+    name=models.CharField(max_length=100,null=True)
     def __str__(self):
         return self.Name   
 
@@ -47,13 +48,17 @@ class Book(models.Model):
     audience = models.CharField(max_length=100)
     page_count = models.IntegerField()
     publisher = models.ForeignKey(Publisher,on_delete=models.CASCADE,default="")
+    is_series=models.BooleanField(default=False)
+    cluster = models.IntegerField(default=0)
+
     series = models.CharField(max_length=100)
     isbn = models.CharField(max_length=100)
     edition = models.CharField(max_length=100)
     category = models.ForeignKey(Category,on_delete=models.CASCADE,default="")
     format = models.CharField(max_length=100)
     language = models.CharField(max_length=100) 
-    is_favorite = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='book_images', default='static/default-image.png')
+
     def __str__(self):
         return self.title
 
@@ -66,6 +71,8 @@ class OrderDetails(models.Model):
 
 class Purchase(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE,default='')
+
     purchaser_name = models.CharField(max_length=100)
     purchase_date = models.DateField(auto_now_add=True)
 

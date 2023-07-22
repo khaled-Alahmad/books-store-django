@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>توصيات الكتب</title>
+</head>
+<body>
+    <h1>توصيات الكتب للمستخدم: {{ user.username }}</h1>
+    
+    <ul>
+        {% for book in recommendations %}
+            <li>{{ book.title }} - {{ book.author }}</li>
+        {% empty %}
+            <li>لا توجد توصيات حاليًا.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

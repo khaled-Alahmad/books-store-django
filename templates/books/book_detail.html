@@ -1,39 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
 <a href="{% url 'books:book_list' %}" class="btn btn-primary">رجوع</a>
-<h1>{{ book.title }}</h1>
+<br>
+<h1>{{ current_book.title }}</h1>
+<img src="{{ current_book.image.url }}" alt="صورة الكتاب">
+<p>المؤلف: {{ current_book.author.name }}</p>
+<p>الوصف: {{ current_book.description }}</p>
+<p>السعر: {{ current_book.price }}</p>
+<p>تاريخ النشر: {{ current_book.publication_date }}</p>
+<p>جمهور الكتاب: {{ current_book.audience }}</p>
+<p>عدد الصفحات: {{ current_book.page_count }}</p>
+<p>دار النشر: {{ current_book.publisher.Name }}</p>
+{% if current_book.is_series %}
+<p>جزء من سلسلة: {{ current_book.series }}</p>
 
-<p>المؤلف: {{ book.author }}</p>
-<p>الوصف: {{ book.description }}</p>
-<p>السعر: {{ book.price }}</p>
-<p>تاريخ النشر: {{ book.publication_date }}</p>
-<p>جمهور الكتاب: {{ book.audience }}</p>
-<p>عدد الصفحات: {{ book.page_count }}</p>
-<p>دار النشر: {{ book.publisher }}</p>
-<p>جزء من سلسلة: {{ book.series }}</p>
-<p>الرقم الدولي ISBN: {{ book.isbn }}</p>
-<p>إصدار: {{ book.edition }}</p>
-<p>صنف الكتاب: {{ book.category }}</p>
-<p>السعر: {{ book.price }}</p>
-<p>التنسيق: {{ book.format }}</p>
-<p>اللغة: {{ book.language }}</p>
+{% endif %}
+<p>الرقم الدولي ISBN: {{ current_book.isbn }}</p>
+<p>إصدار: {{ current_book.edition }}</p>
+<p>صنف الكتاب: {{ current_book.category }}</p>
+<p>السعر: {{ current_book.price }}</p>
+<p>التنسيق: {{ current_book.format }}</p>
+<p>اللغة: {{ current_book.language }}</p>
 
-<h2>الكتب المشتراة</h2>
+{% comment %} <h2>Purchased Books</h2>
 <ul>
   {% for purchased_book in purchased_books %}
-    <li>{{ purchased_book.book.title }} (تاريخ الشراء: {{ purchased_book.purchase_date }})</li>
+    <li>{{ purchased_ book.title }}</li>
   {% empty %}
-    <li>لم يتم شراء هذا الكتاب بعد.</li>
+    <li>No purchased books.</li>
   {% endfor %}
-</ul>
+</ul> {% endcomment %}
 
 <h2>الكتب المشابهة</h2>
 <ul>
   {% for similar_book in similar_books %}
-    <li>{{ similar_book.similar_book.title }}</li>
+    <li>
+      <h3>{{ similar_book.title }}</h3>
+      <img src="{{ similar_book.image.url }}" alt="صورة الكتاب">
+      <p>المؤلف: {{ similar_book.author.name }}</p>
+      <p>السعر: {{ similar_book.price }}</p>
+    </li>
   {% empty %}
     <li>لا توجد كتب مشابهة حتى الآن.</li>
   {% endfor %}
 </ul>
+
+
 
 {% endblock content %}

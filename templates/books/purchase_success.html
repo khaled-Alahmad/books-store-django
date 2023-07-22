@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>تم الشراء بنجاح</h1>
+    <p>تمت عملية الشراء بنجاح للكتاب التالي:</p>
+    <h2>{{ purchase.book.title }}</h2>
+    <p>اسم المشتري: {{ purchase.purchaser_name }}</p>
+    <p>تاريخ الشراء: {{ purchase.purchase_date }}</p>
+
+    <h3>تفاصيل الطلب:</h3>
+    <ul>
+        {% for order_detail in purchase.order.order_details.all %}
+        <li>{{ order_detail.order.order_date }} - {{ order_detail.order.customer.user.username }}</li>
+    {% endfor %}
+    </ul>
+{% endblock content %}

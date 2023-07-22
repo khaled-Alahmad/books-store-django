@@ -4,8 +4,9 @@
     {% for book in books %}
         <div class="book-item">
             <h2><a href="{% url 'books:book_detail' book.id %}">{{ book.title }}</a></h2>
-            <p>{{ book.author }}</p>
-            
+            <p>{{ book.author.name }}</p>
+            <a href="{% url 'books:purchase_book' book.id %}" class="purchase-btn">شراء</a>
+
             {% if user.is_authenticated %}
                 {% if book.id in book_favorite_ids %}
                     {% for favorite in book_favorites %}
